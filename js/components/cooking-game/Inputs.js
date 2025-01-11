@@ -1,11 +1,12 @@
 export class Inputs {
     constructor(){
         this.keys = []
+        this.holdingItem = false
 
         window.addEventListener('keydown', event => {
             if (event.key === 'ArrowDown') event.preventDefault()
             if (event.key === 'ArrowUp') event.preventDefault()
-
+            if (event.code === 'Space') event.preventDefault()
 
             if ((event.key === 'ArrowLeft' ||
                 event.key === 'ArrowRight' ||
@@ -18,6 +19,8 @@ export class Inputs {
             }
         })
         window.addEventListener('keyup', event => {
+            if (event.code === 'Space') event.preventDefault()
+
             if ((event.key === 'ArrowLeft' && this.keys.includes('ArrowLeft')) ||
                 (event.key === 'ArrowRight' && this.keys.includes('ArrowRight')) ||
                 (event.key === 'ArrowUp' && this.keys.includes('ArrowUp')) ||
@@ -28,6 +31,16 @@ export class Inputs {
                 console.log(this.keys)
             }
         })
+        window.addEventListener('keyup', event => {
+            if (event.code === 'Space') {
+                if (!this.holdingItem) {
+                    this.holdingItem = true
+                } else {
+                    this.holdingItem = false
+                }
+            }
+        })
+
     }
     
 }
