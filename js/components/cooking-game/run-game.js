@@ -8,7 +8,9 @@ canvas.height = 500
 const game = new CookingGame(canvas.width, canvas.height)
 
 function animate(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
     game.draw(ctx)
+    game.update()
     requestAnimationFrame(animate)
 }
 animate()
