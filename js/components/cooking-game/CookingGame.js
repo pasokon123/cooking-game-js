@@ -22,23 +22,25 @@
 import { Player } from "./Player.js"
 import { Inputs } from "./Inputs.js"
 import { Tomato } from "./Tomato.js"
-import { TomatoStorage } from "./TomatoStoage.js"
+import { CuttingStation } from "./CuttingStation.js"
 
 export class CookingGame {
     constructor(width, height){
         this.width = width
         this.height = height
         this.player = new Player(this)
-        this.inputs = new Inputs()
+        this.inputs = new Inputs(this)
         this.tomato = new Tomato(this)
-        this.tomatoStorage = new TomatoStorage(this)
+        this.cuttingStation = new CuttingStation(this)
     }
     update(){
         this.player.update(this.inputs.keys)
+        this.cuttingStation.update()
     }
     draw(context){
         this.player.draw(context)
+        this.cuttingStation.draw(context)
         this.tomato.draw(context)
-        this.tomatoStorage.draw(context)
+        
     }
 }

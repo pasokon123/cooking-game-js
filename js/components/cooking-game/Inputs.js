@@ -1,5 +1,6 @@
 export class Inputs {
-    constructor(){
+    constructor(game){
+        this.game = game
         this.keys = []
         this.holdingItem = false
 
@@ -15,7 +16,6 @@ export class Inputs {
             ) && !this.keys.includes(event.key)) {
                 event.preventDefault()
                 this.keys.push(event.key)
-                console.log(this.keys)
             }
         })
         window.addEventListener('keyup', event => {
@@ -28,15 +28,16 @@ export class Inputs {
         ) {
                 event.preventDefault()
                 this.keys.splice(event.key, 1)
-                console.log(this.keys)
             }
         })
         window.addEventListener('keyup', event => {
             if (event.code === 'Space') {
-                if (!this.holdingItem) {
-                    this.holdingItem = true
+                if (!this.game.player.holdingItem && this.game.player.colliding) {
+                    console.log('Holding item')
+                    this.game.player.holdingItem = true
                 } else {
-                    this.holdingItem = false
+                    console.log('Dropped item')
+                    this.game.player.holdingItem = false
                 }
             }
         })

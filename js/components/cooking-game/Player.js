@@ -6,7 +6,9 @@ export class Player {
         this.x = 50
         this.y = 50
         this.speed = 3
+        this.image = document.getElementById('player')
         this.colliding = false
+        this.holdingItem = false
         
     }
     update(input){
@@ -21,12 +23,13 @@ export class Player {
             this.colliding = false
         }
 
-        if (this.colliding && this.game.inputs.holdingItem) {
-            this.game.tomato.x = this.x
-            this.game.tomato.y = this.y
+        if (this.colliding && this.holdingItem) {
+            this.game.tomato.x = this.x 
+            this.game.tomato.y = this.y + 20
+        } else if (this.game.cuttingStation.colliding && !this.holdingItem) {
+            this.game.tomato.x = this.game.cuttingStation.x + 16
+            this.game.tomato.y = this.game.cuttingStation.y + 8
         }
-
-
 
 
        if (input.includes('ArrowLeft')){
@@ -43,5 +46,6 @@ export class Player {
     }
     draw(context){
         context.fillRect(this.x, this.y, this.width, this.height)
+        context.drawImage(this.image, this.x, this.y)
     }
 }
