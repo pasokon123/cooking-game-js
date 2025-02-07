@@ -32,13 +32,7 @@ export class Inputs {
         })
         window.addEventListener('keyup', event => {
             if (event.code === 'Space') {
-                if (!this.game.player.holdingItem && this.game.player.colliding) {
-                    console.log('Holding item')
-                    this.game.player.holdingItem = true
-                } else {
-                    console.log('Dropped item')
-                    this.game.player.holdingItem = false
-                }
+                this.game.player.action()
             }
         })
 
