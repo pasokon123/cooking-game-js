@@ -7,10 +7,7 @@ export class Player {
         this.y = 50
         this.speed = 3
         this.image = document.getElementById('player')
-        this.collidingWithTomato = false
-        this.holdingItem = false
         this.item = []
-        
     }
     holdItem() {
         if (this.item.length > 0) {
@@ -19,20 +16,35 @@ export class Player {
         }
     }
     action() {
+        // If not holding item
         if (this.item.length < 1) {
+            this.takeItemFromFloor()
             this.takeTomatoFromStorage()
-            this.pickUpItem()
+            this.takeItemFromCuttingStation()
+        // If holding item
+        } else if (this.game.cuttingStation.isCollidingWithPlayer() && this.game.cuttingStation.onTable.length < 1){
+            this.game.cuttingStation.onTable.push(this.item.pop())
         } else {
             this.game.droppedItems.push(this.item.pop())
         }
     }
     takeTomatoFromStorage() {
-        if (this.game.tomatoStorage.isCollidingWithPlayer()) {
-            this.item.push(this.game.tomatoStorage.storage.pop())
+        if (!this.isHoldingItem() &&
+             this.game.tomatoStorage.isCollidingWithPlayer() &&
+            !this.game.player.isCollidingWithDroppedItem()) {
+                 this.item.push(this.game.tomatoStorage.storage.pop())
         }
     }
-    pickUpItem() {
-        if (this.item.length < 1) {
+    takeItemFromCuttingStation() {
+        if (!this.isHoldingItem &&
+             this.game.cuttingStation.isCollidingWithPlayer() &&
+            !this.game.player.isCollidingWithDroppedItem() &&
+             this.game.cuttingStation.onTable.length > 0) {
+                this.item.push(this.game.cuttingStation.onTable.pop())
+        }
+    }
+    takeItemFromFloor() {
+        if (!this.isHoldingItem()) {
             this.game.droppedItems.forEach(item => {
                 if (item.isCollidingWithPlayer()) {
                     let droppedItemIndex = this.game.droppedItems.indexOf(item)
@@ -42,26 +54,21 @@ export class Player {
             });
         }
     }
-    isCollidingWithTomato() {
-        if (this.x + this.width > this.game.tomato.x &&
-            this.x < this.game.tomato.x + this.game.tomato.width &&
-            this.y < this.game.tomato.y + this.game.tomato.height &&
-            this.y + this.height > this.game.tomato.y
-        ) {
+    isCollidingWithDroppedItem() {
+        this.game.droppedItems.forEach(item => {
+            if (item.isCollidingWithPlayer()) {
+                return true
+            } else {
+                return false
+            }
+        })
+    }
+    isHoldingItem () {
+        if (this.item.length > 0) {
             return true
         } else {
             return false
         }
-    }
-    tomatoPickUp() {
-        if (this.isCollidingWithTomato() && this.holdingItem) {
-            this.game.tomato.x = this.x 
-            this.game.tomato.y = this.y + 20
-        } 
-        // else if (this.game.cuttingStation.collidingWithPlayer && !this.holdingItem) {
-        //     this.game.tomato.x = this.game.cuttingStation.x + 16
-        //     this.game.tomato.y = this.game.cuttingStation.y + 8
-        // }
     }
     playerMovement(input) {
         if (input.includes('ArrowLeft')){
@@ -82,6 +89,5 @@ export class Player {
         context.fillRect(this.x, this.y, this.width, this.height)
         context.drawImage(this.image, this.x, this.y)
         this.item.forEach(item => item.draw(context))
-        
     }
 }

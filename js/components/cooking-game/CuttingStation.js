@@ -1,21 +1,19 @@
 export class CuttingStation {
     constructor (game) {
         this.game = game
-        this.width = 80
-        this.height = 80
+        this.width = 64
+        this.height = 64
         this.x = 200
-        this.y = 200
+        this.y = 80
         this.image = document.getElementById('cutting')
         this.collidingWithPlayer = false
-        this.hasItem = false
+        this.onTable = []
     }
-    update () {
-        this.isCollidingWithPlayer()
-     
-    }
-    draw (context) {
-        context.fillRect(this.x, this.y, this.width, this.height)
-        context.drawImage(this.image, this.x, this.y)
+    tomatoPosition() {
+        this.onTable.forEach(item => {
+            item.x = this.x + 20
+            item.y = this.y + 10
+        })
     }
     isCollidingWithPlayer() {
         if (this.x + this.width > this.game.player.x &&
@@ -28,8 +26,12 @@ export class CuttingStation {
             return false
         }
     }
-    pickUp() {
-       
+    update () {
+        this.tomatoPosition()
     }
-    
+    draw (context) {
+        context.fillRect(this.x, this.y, this.width, this.height)
+        context.drawImage(this.image, this.x, this.y)
+        this.onTable.forEach(item => item.draw(context))
+    }
 }
