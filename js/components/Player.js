@@ -1,8 +1,8 @@
 export class Player {
     constructor(game){
         this.game = game
-        this.width = 50
-        this.height = 50
+        this.width = 60
+        this.height = 60
         this.x = 50
         this.y = 50
         this.speed = 3
@@ -17,8 +17,9 @@ export class Player {
     }
     action() {
         this.game.stations.forEach(station => {
-            if (station.isCollidingWithPlayer() && !station.hasItem() && this.isHoldingItem()) {
-
+            if (station.isCollidingWithPlayer()) {
+                station.cut()
+                
             }
         })
     }
@@ -91,7 +92,7 @@ export class Player {
         this.holdItem()
     }
     draw(context){
-        context.fillRect(this.x, this.y, this.width, this.height)
+        context.fillRect(this.x - 6, this.y - 5, this.width, this.height)
         context.drawImage(this.image, this.x, this.y)
         this.item.forEach(item => item.draw(context))
     }

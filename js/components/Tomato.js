@@ -7,6 +7,5 @@ export class Tomato extends Item{
         this.x = this.game.player.x
         this.y = this.game.player.y
         this.image = document.getElementById('tomato')
-        this.placedOnTable = false
     }
 }

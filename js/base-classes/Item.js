@@ -18,7 +18,7 @@ export class Item {
         }
     }
     draw(context){
-        context.fillRect(this.x - 4, this.y - 2, this.width, this.height)
+        context.fillRect(this.x - 6, this.y - 6, this.width, this.height)
         context.drawImage(this.image, this.x, this.y)
     }
 }

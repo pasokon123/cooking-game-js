@@ -20,6 +20,7 @@ import { Player } from "../components/Player.js"
 import { Inputs } from "../components/Inputs.js"
 import { CounterTop } from "../components/CounterTop.js"
 import { TomatoStorage } from "../components/TomatoStorage.js"
+import { CuttingCounter } from "../components/CuttingCounter.js"
 
 export class CookingGame {
     constructor(width, height){
@@ -27,7 +28,7 @@ export class CookingGame {
         this.height = height
         this.player = new Player(this)
         this.inputs = new Inputs(this)
-        this.stations = [new CounterTop(this), new TomatoStorage(this)]
+        this.stations = [new CounterTop(this), new TomatoStorage(this), new CuttingCounter(this)]
         this.droppedItems = []
     }
     update(){
@@ -35,7 +36,7 @@ export class CookingGame {
         this.stations.forEach(station => station.update())
     }
     draw(context){
-        context.fillStyle = 'rgba(225,225,225,0.5)';
+        context.fillStyle = 'rgba(225,225,225,0.1)';
         this.player.draw(context)
         this.droppedItems.forEach(item => item.draw(context))
         this.stations.forEach(station => station.draw(context))
