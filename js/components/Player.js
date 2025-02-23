@@ -3,8 +3,8 @@ export class Player {
         this.game = game
         this.width = 60
         this.height = 60
-        this.x = 50
-        this.y = 50
+        this.x = 200
+        this.y = 150
         this.speed = 3
         this.image = document.getElementById('player')
         this.item = []
@@ -18,7 +18,7 @@ export class Player {
     action() {
         this.game.stations.forEach(station => {
             if (station.isCollidingWithPlayer()) {
-                station.cut()
+                station.work()
                 
             }
         })

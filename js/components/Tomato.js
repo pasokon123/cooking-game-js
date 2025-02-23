@@ -4,8 +4,7 @@ export class Tomato extends Item{
     constructor(game){
         super(game)
         this.game = game
-        this.x = this.game.player.x
-        this.y = this.game.player.y
+        this.name = "Tomato"
         this.image = document.getElementById('tomato')
     }
 }

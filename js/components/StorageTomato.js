@@ -1,7 +1,9 @@
 import { Tomato } from './Tomato.js'
+import { Station } from '../base-classes/Station.js'
 
-export class TomatoStorage {
+export class StorageTomato extends Station {
     constructor(game) {
+        super(game)
         this.game = game
         this.width = 50
         this.height = 50
@@ -16,21 +18,11 @@ export class TomatoStorage {
             this.item.push(new Tomato(this.game))
         }
     }
-    isCollidingWithPlayer() {
-        if (this.x + this.width > this.game.player.x &&
-            this.x < this.game.player.x + this.game.player.width &&
-            this.y < this.game.player.y + this.game.player.height &&
-            this.y + this.height > this.game.player.y
-        ) {
-            return true
-        } else {
-            return false
-        }
-    }
-    update() {
+    update () {
+        this.positionItem()
         this.fillUpStorage()
     }
-    draw(context) {
+    draw (context) {
         context.fillRect(this.x, this.y, this.width, this.height)
         context.drawImage(this.image, this.x, this.y)
     }

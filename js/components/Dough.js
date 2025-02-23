@@ -1,9 +1,10 @@
 import { Item } from "../base-classes/Item.js";
 
-export class SlicedTomato extends Item {
+export class Dough extends Item {
     constructor(game){
         super(game)
         this.game = game
-        this.image = document.getElementById('slicedTomato')
+        this.name = "Dough"
+        this.image = document.getElementById('dough')
     }
 }

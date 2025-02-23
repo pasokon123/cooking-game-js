@@ -1,5 +1,6 @@
 import { Station } from "../base-classes/Station.js"
 import { SlicedTomato } from "./SlicedTomato.js"
+import { Tomato } from "./Tomato.js"
 
 export class CuttingCounter extends Station {
     constructor(game) {
@@ -7,16 +8,16 @@ export class CuttingCounter extends Station {
         this.game = game
         this.x = 300
         this.y = 150
-        this.image = document.getElementById('cuttingBoard')
+        this.image = document.getElementById('cuttingCounter')
     }
-    cut () {
-        if (this.hasItem()) {
+    work () {
+        console.log(this.checkItem())
+        if (this.checkItem() === "Tomato") {
             this.game.player.speed = 0
             setTimeout(() => {
                 this.item = [new SlicedTomato(this)]
                 this.game.player.speed = 3
             }, 2000);
-        }
+         }
+      }
     }
-    
-}

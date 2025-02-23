@@ -1,11 +1,7 @@
-// make canvas
-// movable player
-// interactable cooking stations
-// able to pick up items and put on stations
+
 // MAKING PIZZA
 //
 // stations
-// cutting tomatoes station
 // crushing tomatoes station
 // oven station
 // 
@@ -19,8 +15,10 @@
 import { Player } from "../components/Player.js"
 import { Inputs } from "../components/Inputs.js"
 import { CounterTop } from "../components/CounterTop.js"
-import { TomatoStorage } from "../components/TomatoStorage.js"
+import { StorageTomato } from "../components/StorageTomato.js"
 import { CuttingCounter } from "../components/CuttingCounter.js"
+import { StorageDough } from "../components/StorageDough.js"
+import { RollingCounter } from "../components/RollingCounter.js"
 
 export class CookingGame {
     constructor(width, height){
@@ -28,7 +26,8 @@ export class CookingGame {
         this.height = height
         this.player = new Player(this)
         this.inputs = new Inputs(this)
-        this.stations = [new CounterTop(this), new TomatoStorage(this), new CuttingCounter(this)]
+        this.stations = [new CounterTop(this), new StorageDough(this), new CuttingCounter(this)
+            ,new StorageTomato(this), new RollingCounter(this)]
         this.droppedItems = []
     }
     update(){

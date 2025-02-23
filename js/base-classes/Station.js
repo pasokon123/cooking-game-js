@@ -10,8 +10,8 @@ export class Station {
     }
     positionItem() {
         this.item.forEach(item => {
-            item.x = this.x + 10
-            item.y = this.y + 7
+            item.x = this.x + this.width / 2 - item.width / 2 + 5
+            item.y = this.y + this.height / 2 - item.height / 2 + 5
         })
     }
     isCollidingWithPlayer() {
@@ -30,6 +30,11 @@ export class Station {
             return true
         } else {
             return false
+        }
+    }
+    checkItem () {
+        if (this.hasItem()) {
+            return this.item[0].name
         }
     }
     update () {
