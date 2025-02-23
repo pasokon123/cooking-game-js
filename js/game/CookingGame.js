@@ -5,28 +5,21 @@
 // MAKING PIZZA
 //
 // stations
-// dishwashing station
 // cutting tomatoes station
 // crushing tomatoes station
+// oven station
+// 
 //
 // actions
 // apply tomato sauce
 // apply cheese
 // apply toppings (slices tomatoes, sliceed salami)
 
-// NEXT STEP
-// make tomato storage
-// when you stand next to it and click a button, a tomato will appear
-// and the player will be automatically carrying it without spacebar
 
-// IMPORTANT 
-// remake with arrays holding items
-
-import { Player } from "./Player.js"
-import { Inputs } from "./Inputs.js"
-import { Tomato } from "./Tomato.js"
-import { CuttingStation } from "./CuttingStation.js"
-import { TomatoStorage } from "./TomatoStorage.js"
+import { Player } from "../components/Player.js"
+import { Inputs } from "../components/Inputs.js"
+import { CounterTop } from "../components/CounterTop.js"
+import { TomatoStorage } from "../components/TomatoStorage.js"
 
 export class CookingGame {
     constructor(width, height){
@@ -34,20 +27,17 @@ export class CookingGame {
         this.height = height
         this.player = new Player(this)
         this.inputs = new Inputs(this)
-        this.cuttingStation = new CuttingStation(this)
-        this.tomatoStorage = new TomatoStorage(this)
+        this.stations = [new CounterTop(this), new TomatoStorage(this)]
         this.droppedItems = []
     }
     update(){
         this.player.update(this.inputs.keys)
-        this.cuttingStation.update()
-        this.tomatoStorage.update()
+        this.stations.forEach(station => station.update())
     }
     draw(context){
         context.fillStyle = 'rgba(225,225,225,0.5)';
         this.player.draw(context)
-        this.cuttingStation.draw(context)
-        this.tomatoStorage.draw(context)
         this.droppedItems.forEach(item => item.draw(context))
+        this.stations.forEach(station => station.draw(context))
     }
 }

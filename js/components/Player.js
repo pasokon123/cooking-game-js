@@ -16,33 +16,29 @@ export class Player {
         }
     }
     action() {
-        // If not holding item
-        if (this.item.length < 1) {
-            this.takeItemFromFloor()
-            this.takeTomatoFromStorage()
-            this.takeItemFromCuttingStation()
-        // If holding item
-        } else if (this.game.cuttingStation.isCollidingWithPlayer() && this.game.cuttingStation.onTable.length < 1){
-            this.game.cuttingStation.onTable.push(this.item.pop())
-        } else {
-            this.game.droppedItems.push(this.item.pop())
-        }
+        this.game.stations.forEach(station => {
+            if (station.isCollidingWithPlayer() && !station.hasItem() && this.isHoldingItem()) {
+
+            }
+        })
     }
-    takeTomatoFromStorage() {
-        if (!this.isHoldingItem() &&
-             this.game.tomatoStorage.isCollidingWithPlayer() &&
-            !this.game.player.isCollidingWithDroppedItem()) {
-                 this.item.push(this.game.tomatoStorage.storage.pop())
-        }
+    pickUpItem() {
+        this.takeItemFromFloor()
+        this.takeItemFromStation()
     }
-    takeItemFromCuttingStation() {
-        if (!this.isHoldingItem &&
-             this.game.cuttingStation.isCollidingWithPlayer() &&
-            !this.game.player.isCollidingWithDroppedItem() &&
-             this.game.cuttingStation.onTable.length > 0) {
-                this.item.push(this.game.cuttingStation.onTable.pop())
-        }
+
+    takeItemFromStation () {
+        this.game.stations.forEach(station => {
+            if (station.isCollidingWithPlayer()
+                 && !this.isHoldingItem()
+                 && !this.isCollidingWithDroppedItem()) {
+                    this.item.push(station.item.pop())
+            } else if (this.isHoldingItem() && station.isCollidingWithPlayer()) {
+                    station.item.push(this.item.pop())
+            } 
+        })
     }
+
     takeItemFromFloor() {
         if (!this.isHoldingItem()) {
             this.game.droppedItems.forEach(item => {
@@ -57,6 +53,15 @@ export class Player {
     isCollidingWithDroppedItem() {
         this.game.droppedItems.forEach(item => {
             if (item.isCollidingWithPlayer()) {
+                return true
+            } else {
+                return false
+            }
+        })
+    }
+    isCollidingWithStation () {
+        this.game.stations.forEach(station => {
+            if (station.isCollidingWithPlayer()) {
                 return true
             } else {
                 return false

@@ -32,6 +32,11 @@ export class Inputs {
         })
         window.addEventListener('keyup', event => {
             if (event.code === 'Space') {
+                this.game.player.pickUpItem()
+            }
+        })
+        window.addEventListener('keyup', event => {
+            if (event.code === 'ControlLeft') {
                 this.game.player.action()
             }
         })

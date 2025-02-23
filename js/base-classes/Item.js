@@ -1,12 +1,10 @@
-export class Tomato {
+export class Item {
     constructor(game){
         this.game = game
         this.width = 40
         this.height = 40
-        this.x = this.game.player.x
-        this.y = this.game.player.y
-        this.image = document.getElementById('tomato')
-        this.placedOnTable = false
+        this.x = 0
+        this.y = 0
     }
     isCollidingWithPlayer() {
         if (this.x + this.width > this.game.player.x &&
@@ -20,7 +18,7 @@ export class Tomato {
         }
     }
     draw(context){
-        context.fillRect(this.x, this.y, this.width, this.height)
+        context.fillRect(this.x - 4, this.y - 2, this.width, this.height)
         context.drawImage(this.image, this.x, this.y)
     }
 }
